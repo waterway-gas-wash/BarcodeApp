@@ -1,0 +1,89 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Waterway Membership</title>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <style>
+            .left {
+                width: 40%;
+                float: left;
+                text-align: right;
+            }
+
+            .right {
+                width: 55%;
+                margin-left: 15px;
+                float: left;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            .g-recaptcha {
+                display: inline-block;
+            }
+
+            body {
+                margin: 0;
+                padding: 1em;
+                background-color: #01bce9;
+                font: 75%/1.75em "Trebuchet MS", Verdana, sans-serif;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form method="post">
+
+            <br /> <br /> <br />
+
+            <div class="left">
+                First Name:
+            </div>
+            <div class="right">
+                <input asp-for="First" />
+            </div>
+
+            <br /> <br />
+
+            <div class="left">
+                Last Name:
+            </div>
+            <div class="right">
+                <input asp-for="Last" />
+            </div>
+
+            <br /> <br />
+
+            <div class="left">
+                Email Address:
+            </div>
+            <div class="right">
+                <input asp-for="Email" />
+            </div>
+
+            <br /> <br /> <br />
+
+            <div class="center">
+                <div class="g-recaptcha" data-sitekey="6LctaNUUAAAAAKZimihO4xnZD_YUt-RWbt6egILu"></div>
+            </div>
+
+            <br /> <br />
+
+            <div class="left">
+                <input type="submit" />
+            </div>
+
+            <br /> <br />
+
+        </form>
+    </body>
+    </html>
