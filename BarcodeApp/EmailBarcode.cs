@@ -16,6 +16,7 @@ using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace BarcodeApp
 {
@@ -76,35 +77,67 @@ namespace BarcodeApp
                             BarcodeLib.Barcode b = new BarcodeLib.Barcode();
                             Image img = b.Encode(BarcodeLib.TYPE.UPCA, createUPC, Color.Black, Color.White, 290, 120);
 
-                            img.Save("C:/inetpub/wwwroot/barcode/wwwroot/images/barcode_" + mn.MemberNumber + ".jpg");
+                            img.Save("wwwroot/images/barcode_" + mn.MemberNumber + ".jpg");
 
-                            var barcodeurl = "http://localhost/images/barcode_" + mn.MemberNumber + ".jpg";
+                            var barcodeurl = "http://barcode.localhost/images/barcode_" + mn.MemberNumber + ".jpg";
 
-                            //LinkedResource LinkedImage = new LinkedResource("barcode.jpeg");
-                            //LinkedImage.ContentId = "BC";
-                            //LinkedImage.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
+                            ////LinkedResource LinkedImage = new LinkedResource("barcode.jpeg");
+                            ////LinkedImage.ContentId = "BC";
+                            ////LinkedImage.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
 
-                            //Setup Default sender befault sending the email.
-                            SmtpClient smtpClient = new SmtpClient
+                            ////Setup Default sender befault sending the email.
+                            //SmtpClient smtpClient = new SmtpClient
+                            //{
+                            //    Host = "msmr1.datotel.com",
+                            //    Port = 25,
+                            //    UseDefaultCredentials = true
+                            //};
+                            //Email.DefaultSender = new SmtpSender(smtpClient);
+                            //Email.DefaultRenderer = new RazorRenderer();
+
+
+
+                            //var mail = Email
+                            //  .From("customerservice@waterway.com", "Waterway Gas & Wash Company")
+
+                            //  .To(mr.email)
+                            //  .Subject("Test")
+                            //  .Body("yo dawg, sup?")
+                            //  .UsingTemplateFromFile("wwwroot/email.htm", new { UPC = createUPC, FILE = barcodeurl })
+                            //   .Send();
+
+                            SmtpClient smtp = new SmtpClient();
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Port = 25;
+                            smtp.Host = "msmr1.datotel.com";
+
+                            MailAddress from = new MailAddress("customerservice@waterway.com", "Waterway Gas & Wash Company");
+                            MailAddress to = new MailAddress(mr.email);
+                            MailMessage mail = new MailMessage(from, to);
+                            mail.IsBodyHtml = true;
+
+                            var builder = new StringBuilder();
+
+                            using (var reader = File.OpenText("wwwroot/template/EmailText.htm"))
                             {
-                                Host = "msmr1.datotel.com",
-                                Port = 25,
-                                UseDefaultCredentials = true
-                            };
-                            Email.DefaultSender = new SmtpSender(smtpClient);
-                            Email.DefaultRenderer = new RazorRenderer();
+                                builder.Append(reader.ReadToEnd());
+                            }
 
-                          
+                            builder.Replace("{{barcode-image}}", barcodeurl);
 
-                            var mail = Email
-                              .From("customerservice@waterway.com", "Waterway Gas & Wash Company")
 
-                              .To(mr.email)
-                              .Subject("Test")
-                            
-                             .UsingTemplateFromFile("C:/inetpub/wwwroot/barcode/wwwroot/email.htm", new {UPC = createUPC, FILE = barcodeurl});
-                           
-                            mail.Send();
+                            //string filePath = "C:/inetpub/wwwroot/barcode/template/EmailText.htm";
+                            //string fileContent = System.IO.File.ReadAllText(filePath);
+                            mail.Body = builder.ToString();
+                     
+
+                            mail.Subject = "Your Waterway Coupon Has Arrived!";
+
+                            smtp.Send(mail);
+
+
+
+
 
                             return "success";
                         }
