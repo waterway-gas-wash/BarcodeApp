@@ -71,6 +71,7 @@ namespace BarcodeApp
                         if (mn.NoteCreated == "true")
                         {
                             // create UPC for barcode
+                            //string createUPC = "0727" + newMember.memberCreated.Id + "0";
                             string createUPC = "0727" + newMember.memberCreated.Id + "0";
                             createUPC = CalculateChecksumDigit(createUPC);
 
@@ -79,7 +80,7 @@ namespace BarcodeApp
 
                             img.Save("wwwroot/images/barcode_" + mn.MemberNumber + ".jpg");
 
-                            var barcodeurl = "http://barcode.localhost/images/barcode_" + mn.MemberNumber + ".jpg";
+                            var barcodeurl = "http://barcode.waterway.com/images/barcode_" + mn.MemberNumber + ".jpg";
 
                             ////LinkedResource LinkedImage = new LinkedResource("barcode.jpeg");
                             ////LinkedImage.ContentId = "BC";
