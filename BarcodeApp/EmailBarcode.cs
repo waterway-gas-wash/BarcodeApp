@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.IO;
 using BarcodeApp.Services;
 using BarcodeApp.Models;
 using log4net;
 using System.Net.Mail;
 using System.Drawing;
-using System.Net.Mime;
 using System.Reflection;
-using FluentEmail.Core;
-using FluentEmail.Razor;
-using FluentEmail.Smtp;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace BarcodeApp
@@ -25,10 +15,7 @@ namespace BarcodeApp
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-       
-
-
-        public static string BarcodeEmail(string first, string last, string email)
+        public static (string, string) BarcodeEmail(string first, string last, string email)
         {
             try
             {
@@ -53,7 +40,7 @@ namespace BarcodeApp
                 EmailAddress emailAddress = new EmailAddress();
                 emailAddress.foundEmail = _r.CheckEmail(t, mr);
 
-                if (emailAddress.foundEmail.Success == "false" || emailAddress.foundEmail.Id == "blauer@waterway.com")
+                if (emailAddress.foundEmail.Success == "false" || emailAddress.foundEmail.Id == "gkeller@waterway.com")
                 {
                     // Create new Blue member
                     CreateNewMember newMember = new CreateNewMember();
@@ -71,86 +58,70 @@ namespace BarcodeApp
                         if (mn.NoteCreated == "true")
                         {
                             // create UPC for barcode
-                            string createUPC = "0727" + newMember.memberCreated.Id + "0";
-                            createUPC = CalculateChecksumDigit(createUPC);
+                            //string createUPC = "0727" + newMember.memberCreated.Id + "0";
 
-                            BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-                            Image img = b.Encode(BarcodeLib.TYPE.UPCA, createUPC, Color.Black, Color.White, 290, 120);
+                            //LocationRequest lr = new LocationRequest();
+                            //lr.UnitNumber = "62";
+                            //lr.UnusedCode = _r.GetUseCode(t, lr);
 
-                            img.Save("wwwroot/images/barcode_" + mn.MemberNumber + ".jpg");
+                            GetSingleUseCode su = new GetSingleUseCode();
+                            su.UnitNumber = "62";
+                            su.DealName = "ExpressClean30000";
+                            su.MemberNumber = mn.MemberNumber;
+                            su.ReturnSingleUseCode = _r.GetSingleUse(t, su);
 
-                            var barcodeurl = "http://barcode.localhost/images/barcode_" + mn.MemberNumber + ".jpg";
-
-                            ////LinkedResource LinkedImage = new LinkedResource("barcode.jpeg");
-                            ////LinkedImage.ContentId = "BC";
-                            ////LinkedImage.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
-
-                            ////Setup Default sender befault sending the email.
-                            //SmtpClient smtpClient = new SmtpClient
-                            //{
-                            //    Host = "msmr1.datotel.com",
-                            //    Port = 25,
-                            //    UseDefaultCredentials = true
-                            //};
-                            //Email.DefaultSender = new SmtpSender(smtpClient);
-                            //Email.DefaultRenderer = new RazorRenderer();
-
-
-
-                            //var mail = Email
-                            //  .From("customerservice@waterway.com", "Waterway Gas & Wash Company")
-
-                            //  .To(mr.email)
-                            //  .Subject("Test")
-                            //  .Body("yo dawg, sup?")
-                            //  .UsingTemplateFromFile("wwwroot/email.htm", new { UPC = createUPC, FILE = barcodeurl })
-                            //   .Send();
-
-                            SmtpClient smtp = new SmtpClient();
-                            smtp.UseDefaultCredentials = true;
-                            smtp.Port = 25;
-                            smtp.Host = "msmr1.datotel.com";
-
-                            MailAddress from = new MailAddress("customerservice@waterway.com", "Waterway Gas & Wash Company");
-                            MailAddress to = new MailAddress(mr.email);
-                            MailMessage mail = new MailMessage(from, to);
-                            mail.IsBodyHtml = true;
-
-                            var builder = new StringBuilder();
-
-                            using (var reader = File.OpenText("wwwroot/template/EmailText.htm"))
+                            if (su.ReturnSingleUseCode.Success == "true")
                             {
-                                builder.Append(reader.ReadToEnd());
+                                string createUPC = su.ReturnSingleUseCode.Data.SingleUseCode.ToString();
+
+                                //createUPC = CalculateChecksumDigit(createUPC);
+                                createUPC = "00072795687";
+
+                                BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+                                Image img = b.Encode(BarcodeLib.TYPE.UPCA, createUPC, Color.Black, Color.White, 290, 120);
+
+                                img.Save("wwwroot/images/barcode_" + mn.MemberNumber + ".jpg");
+
+                                var barcodeurl = "http://barcode.localhost/images/barcode_" + mn.MemberNumber + ".jpg";
+
+                                SmtpClient smtp = new SmtpClient();
+                                smtp.UseDefaultCredentials = true;
+                                smtp.Port = 25;
+                                smtp.Host = "msmr1.datotel.com";
+
+                                MailAddress from = new MailAddress("customerservice@waterway.com", "Waterway Gas & Wash Company");
+                                MailAddress to = new MailAddress(mr.email);
+                                MailMessage mail = new MailMessage(from, to);
+                                mail.IsBodyHtml = true;
+
+                                var builder = new StringBuilder();
+
+                                using (var reader = File.OpenText("wwwroot/template/EmailText.htm"))
+                                {
+                                    builder.Append(reader.ReadToEnd());
+                                }
+
+                                builder.Replace("{{barcode-image}}", barcodeurl);
+
+                                mail.Body = builder.ToString();
+
+                                mail.Subject = "Your Waterway Coupon Has Arrived!";
+
+                                smtp.Send(mail);
+
+                                return ("success", barcodeurl);
                             }
-
-                            builder.Replace("{{barcode-image}}", barcodeurl);
-
-
-                            //string filePath = "C:/inetpub/wwwroot/barcode/template/EmailText.htm";
-                            //string fileContent = System.IO.File.ReadAllText(filePath);
-                            mail.Body = builder.ToString();
-                     
-
-                            mail.Subject = "Your Waterway Coupon Has Arrived!";
-
-                            smtp.Send(mail);
-
-
-
-
-
-                            return "success";
                         }
                     }
                 }
 
+                return ("failure","");
 
-                return "failure";
             }
             catch (Exception e)
             {
                 MethodBase m = MethodBase.GetCurrentMethod();
-                return "failure";
+                return ("failure","");
             }
 
         }

@@ -32,11 +32,22 @@ namespace BarcodeApp.Pages
             get; set;
         }
 
+        public string expirationDate
+        {
+            get; set;
+        }
+
+        public string passedURL
+        {
+            get; set;
+        }
+
         public void OnGet()
         {
             First = "";
             Last = "";
             Email = "";
+            passedURL = "";
         }
 
         public Microsoft.AspNetCore.Mvc.RedirectResult OnPost()
@@ -44,9 +55,12 @@ namespace BarcodeApp.Pages
             First = Request.Form[nameof(First)];
             Last = Request.Form[nameof(Last)];
             Email = Request.Form[nameof(Email)];
-            string result = BarcodeApp.EmailBarcode.BarcodeEmail(First, Last, Email);
+            (string result, string passedurl) = BarcodeApp.EmailBarcode.BarcodeEmail(First, Last, Email);
 
-            string url = result;
+            passedURL = passedurl;
+            expirationDate = DateTime.Now.AddDays(14).ToString("MM/dd/yyyy");
+
+            string url = result + "?url=" + passedURL + "&expDate=" + expirationDate;
             return Redirect(url);
         }
 

@@ -122,5 +122,53 @@ namespace BarcodeApp.Services
             }
         }
 
+        //public ReturnUnusedCodes GetUseCode(Token t, LocationRequest lr)
+        //{
+        //    try
+        //    {
+        //        var client = new RestClient("https://services.waterway.com");
+        //        var request = new RestRequest("/api/1.0/businessaction/getdrbsingleusedeals/" + lr.UnitNumber);
+
+        //        request.AddHeader("Accept", "application/json");
+        //        request.AddHeader("Authorization", t.token.token_type + " " + t.token.access_token);
+        //        request.AddParameter("Unit", lr.UnitNumber);
+
+        //        var response = client.Post(request);
+
+        //        return JsonConvert.DeserializeObject<ReturnUnusedCodes>(response.Content);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MethodBase m = MethodBase.GetCurrentMethod();
+        //        Logger.ErrorFormat("Error in {0}.{1}: {2}", m.ReflectedType.Name, m.Name, e.Message);
+        //        return null;
+        //    }
+        //}
+
+        public ReturnSingleUse GetSingleUse(Token t, GetSingleUseCode su)
+        {
+            try
+            {
+                var client = new RestClient("https://services.waterway.com");
+                var request = new RestRequest("/api/1.0/businessaction/getdrbsingleusecode" + "?unit=" + su.UnitNumber + "&dealName=" + su.DealName + "&memberNumber=" + su.MemberNumber);
+
+                request.AddHeader("Accept", "application/json");
+                request.AddHeader("Authorization", t.token.token_type + " " + t.token.access_token);
+                request.AddParameter("unit", su.UnitNumber);
+                request.AddParameter("dealName", su.DealName);
+                request.AddParameter("memberNumber", su.MemberNumber);
+
+                var response = client.Post(request);
+
+                return JsonConvert.DeserializeObject<ReturnSingleUse>(response.Content);
+            }
+            catch (Exception e)
+            {
+                MethodBase m = MethodBase.GetCurrentMethod();
+                Logger.ErrorFormat("Error in {0}.{1}: {2}", m.ReflectedType.Name, m.Name, e.Message);
+                return null;
+            }
+        }
+
     }
 }

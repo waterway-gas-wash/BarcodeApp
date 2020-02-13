@@ -48,6 +48,56 @@ namespace BarcodeApp.Models
         public string NoteCreated { get; set; }
     }
 
+    //public class LocationRequest
+    //{
+    //    public string UnitNumber { get; set; }
+    //    public ReturnUnusedCodes UnusedCode { get; set; }
+    //}
+
+    //public class ReturnUnusedCodes
+    //{
+    //    public string Success { get; set; }
+    //    public string Id { get; set; }
+    //    public List<Data> DataCode { get; set; }
+    //    public string ActionError { get; set; }
+    //    public string ActionValidationErrorList { get; set; }
+    //}
+
+    //public class DataCode
+    //{
+    //    public string UnusedCodes { get; set; }
+    //}
+
+    public class GetSingleUseCode
+    {
+        public string UnitNumber { get; set; }
+        public string DealName { get; set; }
+        public string MemberNumber { get; set; }
+        public ReturnSingleUse ReturnSingleUseCode { get; set; }
+    }
+
+    public class ReturnSingleUse
+        {
+        public string Success { get; set; }
+        public string Id { get; set; }
+        public Data Data { get; set; }
+        public string ActionError { get; set; }
+        public string ActionValidationErrorList { get; set; }
+    }
+
+    public class Data
+    {
+        public string id { get; set; }
+        public string DealName { get; set; }
+        public string Description { get; set; }
+        public string RequestedDate { get; set; }
+        public string ExpirationDate { get; set; }
+        public int Unit { get; set; }
+        public int RequestedMember { get; set; }
+        public string RequestedByDate { get; set; }
+        public string SingleUseCode { get; set; }
+    }
+
     public class Response
     {
         public string Id { get; set; }
