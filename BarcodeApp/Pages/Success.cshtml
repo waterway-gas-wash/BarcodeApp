@@ -32,98 +32,90 @@
     <link rel="alternate" type="application/rss+xml" title="Waterway Carwash &raquo; Home Comments Feed" href="https://www.waterway.com/home/feed/" />
     <!-- This site uses the Google Analytics by MonsterInsights plugin v7.10.0 - Using Analytics tracking - https://www.monsterinsights.com/ -->
     <script type="text/javascript" data-cfasync="false">
-var mi_version         = '7.10.0';
-	var mi_track_user      = true;
-	var mi_no_track_reason = '';
+        var mi_version = '7.10.0';
+        var mi_track_user = true;
+        var mi_no_track_reason = '';
 
-	var disableStr = 'ga-disable-UA-66539566-1';
+        var disableStr = 'ga-disable-UA-66539566-1';
 
-	/* Function to detect opted out users */
-	function __gaTrackerIsOptedOut() {
-		return document.cookie.indexOf(disableStr + '=true') > -1;
-	}
+        /* Function to detect opted out users */
+        function __gaTrackerIsOptedOut() {
+            return document.cookie.indexOf(disableStr + '=true') > -1;
+        }
 
-    function getParams()
-    {
-        var parameters = location.search.substring(1).split("&");
+        /* Disable tracking if the opt-out cookie exists. */
+        if (__gaTrackerIsOptedOut()) {
+            window[disableStr] = true;
+        }
 
-        var temp = parameters[0].split("=");
-        b = unescape(temp[1]);
-        temp = parameters[1].split("=");
-        e = unescape(temp[1]);
-        document.getElementById("bc").innerHTML = b;
-        document.getElementById("exp").innerHTML = e;
-    }
+        /* Opt-out function */
+        function __gaTrackerOptout() {
+            document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+            window[disableStr] = true;
+        }
 
-	/* Disable tracking if the opt-out cookie exists. */
-	if ( __gaTrackerIsOptedOut() ) {
-		window[disableStr] = true;
-	}
+        if (mi_track_user) {
+            (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', '__gaTracker');
 
-	/* Opt-out function */
-	function __gaTrackerOptout() {
-	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
-	  window[disableStr] = true;
-	}
+            __gaTracker('create', 'UA-66539566-1', 'auto');
+            __gaTracker('set', 'forceSSL', true);
+            __gaTracker('require', 'displayfeatures');
+            __gaTracker('send', 'pageview');
+        } else {
+            console.log("");
+            (function () {
+                /* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+                var noopfn = function () {
+                    return null;
+                };
+                var noopnullfn = function () {
+                    return null;
+                };
+                var Tracker = function () {
+                    return null;
+                };
+                var p = Tracker.prototype;
+                p.get = noopfn;
+                p.set = noopfn;
+                p.send = noopfn;
+                var __gaTracker = function () {
+                    var len = arguments.length;
+                    if (len === 0) {
+                        return;
+                    }
+                    var f = arguments[len - 1];
+                    if (typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function') {
+                        console.log('Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + mi_no_track_reason);
+                        return;
+                    }
+                    try {
+                        f.hitCallback();
+                    } catch (ex) {
 
-	if ( mi_track_user ) {
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','__gaTracker');
-
-		__gaTracker('create', 'UA-66539566-1', 'auto');
-		__gaTracker('set', 'forceSSL', true);
-		__gaTracker('require', 'displayfeatures');
-		__gaTracker('send','pageview');
-	} else {
-		console.log( "" );
-		(function() {
-			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
-			var noopfn = function() {
-				return null;
-			};
-			var noopnullfn = function() {
-				return null;
-			};
-			var Tracker = function() {
-				return null;
-			};
-			var p = Tracker.prototype;
-			p.get = noopfn;
-			p.set = noopfn;
-			p.send = noopfn;
-			var __gaTracker = function() {
-				var len = arguments.length;
-				if ( len === 0 ) {
-					return;
-				}
-				var f = arguments[len-1];
-				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
-					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + mi_no_track_reason );
-					return;
-				}
-				try {
-					f.hitCallback();
-				} catch (ex) {
-
-				}
-			};
-			__gaTracker.create = function() {
-				return new Tracker();
-			};
-			__gaTracker.getByName = noopnullfn;
-			__gaTracker.getAll = function() {
-				return [];
-			};
-			__gaTracker.remove = noopfn;
-			window['__gaTracker'] = __gaTracker;
-					})();
-		}</script>
+                    }
+                };
+                __gaTracker.create = function () {
+                    return new Tracker();
+                };
+                __gaTracker.getByName = noopnullfn;
+                __gaTracker.getAll = function () {
+                    return [];
+                };
+                __gaTracker.remove = noopfn;
+                window['__gaTracker'] = __gaTracker;
+            })();
+        }
+    </script>
     <!-- / Google Analytics by MonsterInsights -->
     <script type="text/javascript">
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.waterway.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.16"}};
-			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);</script>
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/www.waterway.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.16" } };
+        !function (a, b, c) { function d(a) { var b, c, d, e, f = String.fromCharCode; if (!k || !k.fillText) return !1; switch (k.clearRect(0, 0, j.width, j.height), k.textBaseline = "top", k.font = "600 32px Arial", a) { case "flag": return k.fillText(f(55356, 56826, 55356, 56819), 0, 0), !(j.toDataURL().length < 3e3) && (k.clearRect(0, 0, j.width, j.height), k.fillText(f(55356, 57331, 65039, 8205, 55356, 57096), 0, 0), b = j.toDataURL(), k.clearRect(0, 0, j.width, j.height), k.fillText(f(55356, 57331, 55356, 57096), 0, 0), c = j.toDataURL(), b !== c); case "emoji4": return k.fillText(f(55357, 56425, 55356, 57341, 8205, 55357, 56507), 0, 0), d = j.toDataURL(), k.clearRect(0, 0, j.width, j.height), k.fillText(f(55357, 56425, 55356, 57341, 55357, 56507), 0, 0), e = j.toDataURL(), d !== e }return !1 } function e(a) { var c = b.createElement("script"); c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c) } var f, g, h, i, j = b.createElement("canvas"), k = j.getContext && j.getContext("2d"); for (i = Array("flag", "emoji4"), c.supports = { everything: !0, everythingExceptFlag: !0 }, h = 0; h < i.length; h++)c.supports[i[h]] = d(i[h]), c.supports.everything = c.supports.everything && c.supports[i[h]], "flag" !== i[h] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[i[h]]); c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function () { c.DOMReady = !0 }, c.supports.everything || (g = function () { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", g, !1), a.addEventListener("load", g, !1)) : (a.attachEvent("onload", g), b.attachEvent("onreadystatechange", function () { "complete" === b.readyState && c.readyCallback() })), f = c.source || {}, f.concatemoji ? e(f.concatemoji) : f.wpemoji && f.twemoji && (e(f.twemoji), e(f.wpemoji))) }(window, document, window._wpemojiSettings);
+    </script>
     <style type="text/css">
 
         img.wp-smiley,
@@ -151,69 +143,64 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.
     <link rel='stylesheet' id='bd-ui-css-css' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css?ver=1.9.0' type='text/css' media='' />
     <link rel="stylesheet" type="text/css" href="https://www.waterway.com/wp-content/plugins/smart-slider-3/library/media/smartslider.min.css?1531765438" media="all" />
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
-    <style type="text/css">
-        .n2-ss-spinner-simple-white-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -20px;
-            background: #fff;
-            width: 20px;
-            height: 20px;
-            padding: 10px;
-            border-radius: 50%;
-            z-index: 1000;
-        }
+    <style type="text/css">.n2-ss-spinner-simple-white-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -20px;
+    background: #fff;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 1000;
+}
 
-        .n2-ss-spinner-simple-white {
-            outline: 1px solid RGBA(0,0,0,0);
-            width: 100%;
-            height: 100%;
-        }
+.n2-ss-spinner-simple-white {
+  outline: 1px solid RGBA(0,0,0,0);
+  width:100%;
+  height: 100%;
+}
 
-            .n2-ss-spinner-simple-white:before {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 20px;
-                height: 20px;
-                margin-top: -11px;
-                margin-left: -11px;
-            }
+.n2-ss-spinner-simple-white:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -11px;
+    margin-left: -11px;
+}
 
-            .n2-ss-spinner-simple-white:not(:required):before {
-                content: '';
-                border-radius: 50%;
-                border-top: 2px solid #333;
-                border-right: 2px solid transparent;
-                animation: n2SimpleWhite .6s linear infinite;
-                -webkit-animation: n2SimpleWhite .6s linear infinite;
-            }
+.n2-ss-spinner-simple-white:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border-top: 2px solid #333;
+    border-right: 2px solid transparent;
+    animation: n2SimpleWhite .6s linear infinite;
+    -webkit-animation: n2SimpleWhite .6s linear infinite;
+}
+@@keyframes n2SimpleWhite {
+    to {transform: rotate(360deg);}
+}
 
-        @@keyframes n2SimpleWhite {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @@-webkit-keyframes n2SimpleWhite {
-            to {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-    </style>
+@@-webkit-keyframes n2SimpleWhite {
+    to {-webkit-transform: rotate(360deg);}
+}</style>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
     <script type='text/javascript' src='https://www.google.com/jsapi?ver=4.7.16'></script>
     <script type='text/javascript'>
-/* <![CDATA[ */
-var wpgmp_ajaxurl = {"ajaxurl":"https:\/\/www.waterway.com\/wp-admin\/admin-ajax.php"};
-/* ]]> */</script>
+        /* <![CDATA[ */
+        var wpgmp_ajaxurl = { "ajaxurl": "https:\/\/www.waterway.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/wp-google-map-pro/js/wpgmp-google-map.js?ver=4.7.16'></script>
     <script type='text/javascript'>
-/* <![CDATA[ */
-var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions":"doc,pdf,ppt,zip,xls,docx,pptx,xlsx","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/www.waterway.com","hash_tracking":"false"};
-/* ]]> */</script>
+        /* <![CDATA[ */
+        var monsterinsights_frontend = { "js_events_tracking": "true", "download_extensions": "doc,pdf,ppt,zip,xls,docx,pptx,xlsx", "inbound_paths": "[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]", "home_url": "https:\/\/www.waterway.com", "hash_tracking": "false" };
+        /* ]]> */
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend.min.js?ver=7.10.0'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/html5-responsive-faq/js/hrf-script.js?ver=4.7.16'></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/jsbarcode/3.3.7/barcodes/JsBarcode.ean-upc.min.js?ver=4.7.16'></script>
@@ -241,63 +228,65 @@ var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=427855028044348&ev=PageView&noscript=1" />
     <!-- End Facebook Pixel Code -->
     <script>
-jQuery(document).ready(function(){
-			jQuery('.scroll').click(function(e){
-				e.preventDefault();
-				var url = jQuery('body').find(jQuery(this).attr('href')).offset().top - 133;
-				jQuery('html, body').animate({
-					scrollTop : url
-				}, 700);
-				return false;
-		 	});
-		});
 
-		jQuery(document).ready(function () {
-			var city = 'St. Louis';
+        jQuery(document).ready(function () {
+            jQuery('.scroll').click(function (e) {
+                e.preventDefault();
+                var url = jQuery('body').find(jQuery(this).attr('href')).offset().top - 133;
+                jQuery('html, body').animate({
+                    scrollTop: url
+                }, 700);
+                return false;
+            });
+        });
 
-			var citySelector = jQuery('#city-selector');
+        jQuery(document).ready(function () {
+            var city = 'St. Louis';
 
-			var a = citySelector .find('a').filter(function () {
-				return jQuery(this).text() === city.toUpperCase();
-			});
+            var citySelector = jQuery('#city-selector');
 
-			updateSelectedCity.call(a);
+            var a = citySelector.find('a').filter(function () {
+                return jQuery(this).text() === city.toUpperCase();
+            });
 
-			citySelector.find('a').click(function (e) {
-				updateSelectedCity.call(this);
-				// write the code here to save the selected city in session
-				var element = jQuery(this),
-					city = element.data('city'),
-					region = element.data('region');
-				jQuery.post("https://www.waterway.com/wp-content/themes/waterway_13l/set_session.php", {"city": city, "region": region})
-					.done(function () {
-						var url = window.location.href;
-						//REDIRECT FOR HIGHLANDPARK
-						if(url && (url.indexOf('highlandpark-il') !== -1 && city !== "Chicago") || (url.indexOf('hudson-oh') !== -1 && city !== "Cleveland"))
-						{
-							window.location.href = "/";
-						}else
-						{
-							location.reload();
-						}
-					});
-				e.preventDefault();
-			});
-		});
+            updateSelectedCity.call(a);
 
-			function updateSelectedCity() {
-				var citySelector = jQuery('#city-selector'),
-					selectedElement = jQuery(this);
-				citySelector.find('li.active').removeClass('active');
-				selectedElement.parent('li').addClass('active');
-				citySelector.children('button').children('span').text(selectedElement.text());
-			}</script>
-    <script type="text/javascript">(function(){var N=this;N.N2_=N.N2_||{r:[],d:[]},N.N2R=N.N2R||function(){N.N2_.r.push(arguments)},N.N2D=N.N2D||function(){N.N2_.d.push(arguments)}}).call(window);if(!window.n2jQuery){window.n2jQuery={ready:function(cb){console.error('n2jQuery will be deprecated!');N2R(['$'],cb)}}}window.nextend={localization:{},ready:function(cb){console.error('nextend.ready will be deprecated!');N2R('documentReady',function($){cb.call(window,$)})}};</script>
+            citySelector.find('a').click(function (e) {
+                updateSelectedCity.call(this);
+                // write the code here to save the selected city in session
+                var element = jQuery(this),
+                    city = element.data('city'),
+                    region = element.data('region');
+                jQuery.post("https://www.waterway.com/wp-content/themes/waterway_13l/set_session.php", { "city": city, "region": region })
+                    .done(function () {
+                        var url = window.location.href;
+                        //REDIRECT FOR HIGHLANDPARK
+                        if (url && (url.indexOf('highlandpark-il') !== -1 && city !== "Chicago") || (url.indexOf('hudson-oh') !== -1 && city !== "Cleveland")) {
+                            window.location.href = "/";
+                        } else {
+                            location.reload();
+                        }
+                    });
+                e.preventDefault();
+            });
+        });
+
+        function updateSelectedCity() {
+            var citySelector = jQuery('#city-selector'),
+                selectedElement = jQuery(this);
+            citySelector.find('li.active').removeClass('active');
+            selectedElement.parent('li').addClass('active');
+            citySelector.children('button').children('span').text(selectedElement.text());
+        }
+    </script>
+    <script type="text/javascript">(function () { var N = this; N.N2_ = N.N2_ || { r: [], d: [] }, N.N2R = N.N2R || function () { N.N2_.r.push(arguments) }, N.N2D = N.N2D || function () { N.N2_.d.push(arguments) } }).call(window); if (!window.n2jQuery) { window.n2jQuery = { ready: function (cb) { console.error('n2jQuery will be deprecated!'); N2R(['$'], cb) } } } window.nextend = { localization: {}, ready: function (cb) { console.error('nextend.ready will be deprecated!'); N2R('documentReady', function ($) { cb.call(window, $) }) } };</script>
     <script type="text/javascript" src="https://www.waterway.com/wp-content/plugins/smart-slider-3/nextend/media/dist/n2.min.js?1531765454"></script>
     <script type="text/javascript" src="https://www.waterway.com/wp-content/plugins/smart-slider-3/nextend/media/dist/nextend-frontend.min.js?1531765455"></script>
     <script type="text/javascript" src="https://www.waterway.com/wp-content/plugins/smart-slider-3/library/media/dist/smartslider-frontend.min.js?1531765444"></script>
     <script type="text/javascript" src="https://www.waterway.com/wp-content/plugins/smart-slider-3/library/media/plugins/type/simple/simple/dist/smartslider-simple-type-frontend.min.js?1531765574"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+
+    </script>
 </head>
 
 <body class="home page-template-default page page-id-6 group-blog">
@@ -470,7 +459,6 @@ jQuery(document).ready(function(){
                         <h1>Want to use this code later?</h1>
                         <p>Check your email. We’ve sent your code there, too.</p>
                     </div>
-                    <div id="exp"></div>
                 </section>
                 <section class="location mobile-reverse">
                     <img class="image" src="images/map-highland.png" />
@@ -670,28 +658,33 @@ jQuery(document).ready(function(){
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/woocommerce/assets/js/frontend/checkout.js?ver=4.7.16'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
     <script type='text/javascript'>
-/* <![CDATA[ */
-var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
-/* ]]> */</script>
+        /* <![CDATA[ */
+        var woocommerce_params = { "ajax_url": "\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/?wc-ajax=%%endpoint%%" };
+        /* ]]> */
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=2.6.8'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js?ver=1.4.1'></script>
     <script type='text/javascript'>
-/* <![CDATA[ */
-var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","fragment_name":"wc_fragments"};
-/* ]]> */</script>
+        /* <![CDATA[ */
+        var wc_cart_fragments_params = { "ajax_url": "\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/?wc-ajax=%%endpoint%%", "fragment_name": "wc_fragments" };
+        /* ]]> */
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.6.8'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/js/navigation.js?ver=20120206'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/js/skip-link-focus-fix.js?ver=20130115'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/comment-reply.min.js?ver=4.7.16'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
-    <script type='text/javascript'>jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":0,"isRTL":false});});</script>
+    <script type='text/javascript'>
+        jQuery(document).ready(function (jQuery) { jQuery.datepicker.setDefaults({ "closeText": "Close", "currentText": "Today", "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "nextText": "Next", "prevText": "Previous", "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], "dayNamesMin": ["S", "M", "T", "W", "T", "F", "S"], "dateFormat": "MM d, yy", "firstDay": 0, "isRTL": false }); });
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/js/bootstrap.min.js?ver=4.7.16'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/js/13l.js?v=4.4&#038;ver=4.7.16'></script>
     <script type='text/javascript'>
-/* <![CDATA[ */
-var ww_api = {"ajax_url":"https:\/\/www.waterway.com\/wp-admin\/admin-ajax.php"};
-/* ]]> */</script>
+        /* <![CDATA[ */
+        var ww_api = { "ajax_url": "https:\/\/www.waterway.com\/wp-admin\/admin-ajax.php" };
+/* ]]> */
+    </script>
     <script type='text/javascript' src='https://www.waterway.com/wp-content/themes/waterway_13l/js/ww-pb-scripts.js?v=4.1&#038;ver=4.7.16'></script>
     <script type='text/javascript' src='https://www.waterway.com/wp-includes/js/wp-embed.min.js?ver=4.7.16'></script>
 
@@ -751,5 +744,6 @@ var ww_api = {"ajax_url":"https:\/\/www.waterway.com\/wp-admin\/admin-ajax.php"}
     </style>
 </body>
 </html>
+
 
 
